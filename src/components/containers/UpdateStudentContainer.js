@@ -1,23 +1,23 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { addStudentThunk, fetchAllCampusesThunk } from "../../store/thunks";
+import { editStudentThunk, fetchAllCampusesThunk } from "../../store/thunks";
 import { Link } from "react-router-dom";
 import { fetchStudentThunk } from "../../store/thunks";
 
 //import { AddStudentView } from "../views"
 
-class AddStudentContainer extends Component {
+class UpdateStudentContainer extends Component {
     constructor(props) {
         super(props); {
             this.state = {
-                fistName: '',
-                lastName: '',
-                Email: '',
-                image: "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png",
-                gpa: 0,
-                campusId: 0,
-                data: []
+                firstName: this.props.student.firstname,
+                lastName: this.props.student.lastname,
+                Email: this.props.student.email,
+                image: this.props.student.imageUrl,
+                gpa: this.props.student.gpa,
+                campusId: this.props.student.campusId,
+
 
             }
 
@@ -47,27 +47,27 @@ class AddStudentContainer extends Component {
                 <form onSubmit={this.handleSubmit}>
                     <label>
                         First Name:
-                        <input type="text" value={this.state.value} onChange={this.handleFirstName} />
+                        <input name="firstname" type="text" defaultValue={this.props.student.value} onChange={this.handleFirstName} />
                     </label>
                     <label>
                         Last Name:
-                        <input type="text" value={this.state.value} onChange={this.handleLastName} />
+                        <input name="lastname" type="text" defaultValue={this.props.student.value} onChange={this.handleLastName} />
                     </label>
                     <label>
                         Email:
-                        <input type="email" value={this.state.value} onChange={this.handleEmail} />
+                        <input name="email" type="email" defaultValue={this.props.student.value} onChange={this.handleEmail} />
                     </label>
                     <label>
                         image:
-                        <input type="text" value={this.state.value} onChange={this.handleImage} />
+                        <input name="imageUrl" type="text" defaultValue={this.props.student.value} onChange={this.handleImage} />
                     </label>
                     <label>
                         GPA:
-                        <input type="text" value={this.state.value} onChange={this.handleGpa} />
+                        <input name="gpa" type="text" defaultValue={this.props.student.value} onChange={this.handleGpa} />
                     </label>
                     <label>
                         Select College:
-                        <select value={this.state.value} onChange={this.handleCollege} placeholder="Select College">
+                        <select value={this.props.student.campusId} onChange={this.handleCollege} placeholder="Select College">
                             <option key="0" value="0">Not Selected</option>
                             {
                                 this.props.allCampuses.map(campus => {
@@ -91,7 +91,7 @@ class AddStudentContainer extends Component {
 
     handleFirstName(event) {
         this.setState({
-            fistName: event.target.value
+            firstName: event.target.value
         })
 
     }
@@ -107,18 +107,19 @@ class AddStudentContainer extends Component {
         })
     }
     handleImage(event) {
-        // if (event.target.files && event.target.files[0]) {
-        //     this.setState({
-        //         image: URL.createObjectURL(event.target.files[0])
-        //     });
-        // }
+
 
         this.setState({
             image: event.target.value
-        })
+        });
+
+
+        // this.setState({
+        //     Email: event.target.value
+        // })
     }
     handleGpa(event) {
-        let g = Number(Number(event.target.value).toFixed(2))
+        let g = Number(event.target.value).toFixed(2)
         this.setState({
             gpa: g
         })
@@ -133,14 +134,32 @@ class AddStudentContainer extends Component {
     handleSubmit(event) {
         event.preventDefault();
         console.log(event);
-
+        let id = this.props.student.id
+        let firstname = this.props.student.firstname ? this.state.firstName : this.props.student.firstname;
+        let lastname = this.props.student.lastname ? this.state.lastName : this.props.student.lastname;
+        let email = this.props.student.email ? this.state.Email : this.props.student.email
+        let campusId = this.props.student.campusId ? this.state.campusId : this.props.student.campusId
+        let imageUrl = this.props.student.imageUrl ? this.state.image : this.props.student.imageUrl
+        let gpa = this.props.student.gpa ? this.state.gpa : this.props.student.gpa
+        if (this.props.student.gpa === null) {
+            gpa = this.state.gpa
+        }
+        // let addedData = {
+        //     firstname: this.state.fistName,
+        //     lastname: this.state.lastName,
+        //     email: this.state.Email,
+        //     campusId: this.state.campusId,
+        //     imageUrl: this.state.image,
+        //     gpa: this.state.gpa,
+        // }
         let addedData = {
-            firstname: this.state.fistName,
-            lastname: this.state.lastName,
-            email: this.state.Email,
-            campusId: this.state.campusId,
-            imageUrl: this.state.image,
-            gpa: this.state.gpa,
+            id: id,
+            firstname: firstname,
+            lastname: lastname,
+            email: email,
+            campusId: campusId,
+            imageUrl: imageUrl,
+            gpa: gpa,
         }
         console.log(addedData)
         // this.state.data.push(addedData)
@@ -148,7 +167,7 @@ class AddStudentContainer extends Component {
         //     data: this.state.data
         // })
         // console.log(this.state.data)
-        this.props.addStudent(addedData);
+        this.props.editStudent(addedData);
         // this.props.dispatch({
         //     type: 'ADD_POST',
         //     addedData
@@ -163,7 +182,8 @@ class AddStudentContainer extends Component {
 // Map state to props;
 const mapState = (state) => {
     return {
-        addStudent: state.addStudent,
+        //addStudent: state.addStudent,
+        editStudent: state.editStudent,
         allCampuses: state.allCampuses,
         student: state.student,
     };
@@ -172,19 +192,20 @@ const mapState = (state) => {
 // Map dispatch to props;
 const mapDispatch = (dispatch) => {
     return {
-        addStudent: (student) => dispatch(addStudentThunk(student)),
+        editStudent: student => dispatch(editStudentThunk(student)),
         fetchAllCampuses: () => dispatch(fetchAllCampusesThunk()),
         fetchStudent: (id) => dispatch(fetchStudentThunk(id)),
     };
 };
 
 // Type check props;
-AddStudentContainer.propTypes = {
+UpdateStudentContainer.propTypes = {
     //students: PropTypes.array.isRequired,
-    addStudent: PropTypes.func.isRequired,
+    //addStudent: PropTypes.func.isRequired,
+    editStudent: PropTypes.func.isRequired,
     allCampuses: PropTypes.array.isRequired,
     fetchAllCampuses: PropTypes.func.isRequired,
 };
 
 // Export our store-connected container by default;
-export default connect(mapState, mapDispatch)(AddStudentContainer);
+export default connect(mapState, mapDispatch)(UpdateStudentContainer);

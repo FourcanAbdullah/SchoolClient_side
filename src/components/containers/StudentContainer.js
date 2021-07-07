@@ -4,6 +4,7 @@ import { fetchStudentThunk } from "../../store/thunks";
 import { fetchCampusThunk } from "../../store/thunks";
 import { deleteStudentThunk } from "../../store/thunks";
 import { StudentView } from "../views";
+import { editStudentThunk } from "../../store/thunks";
 
 class StudentContainer extends Component {
   componentDidMount() {
@@ -18,11 +19,16 @@ class StudentContainer extends Component {
 
   }
 
+  EditStudent = () => {
+
+
+  }
   render() {
     return (
       <StudentView
         student={this.props.student}
         DeleteStudent={this.DeleteStudent}
+        EditStudent={this.EditStudent}
       //campus={this.props.campus}
       />
     );
@@ -42,6 +48,7 @@ const mapDispatch = (dispatch) => {
   return {
     fetchStudent: (id) => dispatch(fetchStudentThunk(id)),
     deleteStudent: (id) => dispatch(deleteStudentThunk(id)),
+    editStudent: student => dispatch(editStudentThunk(student)),
     //fetchCampus: (campusId) => dispatch(fetchCampusThunk(campusId))
   };
 };

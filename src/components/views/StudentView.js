@@ -2,11 +2,13 @@ import { Link } from "react-router-dom";
 //import { CampusContainer } from "../containers";
 
 const StudentView = (props) => {
-    const { student, DeleteStudent } = props;
+    const { student, DeleteStudent, EditStudent } = props;
     return (
         <div>
+            <img id="target" src={student.imageUrl} />
             <h1>{student.firstname + " " + student.lastname}</h1>
-            <p>Hello</p>
+            <p>Email:{student.email}</p>
+            <p>GPA:{student.gpa}</p>
             <ul>
                 {
 
@@ -17,6 +19,9 @@ const StudentView = (props) => {
                 }
 
             </ul>
+            {
+                <Link to={`${student.id}/edit`}>Update Student</Link>
+            }
             {
                 <button onClick={DeleteStudent} >Delete Student</button>
             }
