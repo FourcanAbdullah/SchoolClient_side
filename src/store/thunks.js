@@ -13,14 +13,28 @@ export const fetchAllCampusesThunk = () => async (dispatch) => {
   }
 };
 
+/*    */
+//added
 export const addCampusThunk = (campus) => async (dispatch) => {
   try {
     let res = await axios.post(`/api/campuses`, campus);
     dispatch(ac.addCampus(res.data));
   } catch (err) {
+    console.error(err.response.data);
+  }
+};
+
+
+export const deleteCampusThunk = campusId => async dispatch => {
+  try {
+    await axios.delete(`/api/campuses/${campusId}`);
+    //delete succesful so change state with dispatch
+    dispatch(ac.deleteCampus(campusId));
+  } catch (err) {
     console.error(err);
   }
 };
+/*     */
 
 //Single campus
 export const fetchCampusThunk = (id) => async (dispatch) => {
