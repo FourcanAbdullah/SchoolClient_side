@@ -14,7 +14,11 @@ const CampusView = (props) => {
             //<li key={student.id}>{name}</li>
           );
         })}
+        
       </ul>
+      {
+                <Link to={`${campus.id}/edit`}>Update Campus</Link>
+        }
     </div>
   );
 

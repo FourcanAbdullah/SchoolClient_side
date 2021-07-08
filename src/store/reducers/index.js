@@ -8,3 +8,4 @@ export { default as addStudent } from './addStudent';
 
 //added
 export { default as addCampus} from './addCampus';
+export {default as editCampus} from './editCampus';

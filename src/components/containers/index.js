@@ -9,3 +9,4 @@ export { default as UpdateStudentContainer } from "./UpdateStudentContainer"
 
 //added
 export {default as AddCampusContainer} from "./AddCampusContainer";
+export {default as UpdateCampusContainer} from "./UpdatedCampusContainer";

@@ -1,19 +1,20 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { addCampusThunk, fetchAllCampusesThunk } from "../../store/thunks";
+import { editCampusThunk, fetchAllCampusesThunk, fetchCampusThunk } from "../../store/thunks";
 import { Link } from "react-router-dom";
+//import { fetchStudentThunk } from "../../store/thunks";
 
-import { AddCampusView } from "../views"
+//import { AddStudentView } from "../views"
 
-class AddCampusContainer extends Component {
+class UpdateCampusContainer extends Component {
     constructor(props) {
         super(props); 
             this.state = {
-                Name: '',
-                Url: "https://www.cappex.com/sites/default/files/images/hero/college/190150_hero.jpg",
-                Address: '',
-                Description: '' 
+                Name: this.props.campus.name,
+                Url: this.props.campus.imageUrl,
+                Address: this.props.campus.address,
+                Description: this.props.campus.description 
             }
             this.handleName = this.handleName.bind(this);
             this.handleUrl= this.handleUrl.bind(this);
@@ -24,7 +25,6 @@ class AddCampusContainer extends Component {
 not sure about description initial value for its a text and rest are strings
 */
     }
-    
     componentDidMount() {
         console.log(this.props);
         this.props.fetchAllCampuses();
@@ -35,19 +35,22 @@ not sure about description initial value for its a text and rest are strings
                 <form onSubmit={this.handleSubmit}>
                     <label>
                         Name:
-                        <input type="text" value={this.state.value} onChange={this.handleName} />
+                        <input name= "name" type="text" defaultValue={this.props.campus.value} onChange={this.handleName} />
                     </label>
                     <label>
                         Image URL:
-                        <input type="text" value={this.state.value} onChange={this.handleUrl} />
+                        <input name = "imageUrl" type="text" defaultvalue={this.props.campus.value} onChange={this.handleUrl} />
                     </label>
                     <label>
                         Address:
-                        <input type="text" value={this.state.value} onChange={this.handleAddress} />
+                        <input name = "address" type="text" defaultvalue={this.props.campus.value} onChange={this.handleAddress} />
                     </label>
+                    
+        
+                    
                     <label>
                         Description:
-                        <input type="text" value={this.state.value} onChange={this.handleDescription} />
+                        <input name = "description" type="text" defaultvalue={this.props.campus.value} onChange={this.handleDescription} />
                     </label>
                     <input type="submit" value="Submit" />
                 </form>
@@ -80,45 +83,55 @@ not sure about description initial value for its a text and rest are strings
     handleSubmit(event) {
         event.preventDefault();
         console.log(event);
-
+        let id = this.props.campus.id
+        let collegeName = this.props.campus.name ? this.state.Name: this.props.campus.name;
+        let imageurl = this.props.campus.imageUrl ? this.state.Url: this.props.campus.imageUrl;
+        let addresses = this.props.campus.address ? this.state.Address: this.props.campus.address;
+        let descriptions = this.props.campus.description ? this.state.Description: this.props.campus.description;
         let addedData = {
             //this is exact matched model attributes/columns on leftside in backend
-            name: this.state.Name,
-            imageUrl: this.state.Url,
-            address: this.state.Address,
-            description: this.state.Description 
+            id:id,
+            name: collegeName,
+            imageUrl: imageurl,
+            address: addresses,
+            description: descriptions
         }
        console.log(addedData)
-       //this.props.addCampus(addedData);    //line which is not working as it is supposed to.
-       this.props.addCampus(addedData);     
+       this.props.editCampus(addedData);     
        window.history.go(-1)
+       this.props.fetchCampus(id);
     }
 
 }
 // Map state to props;
 const mapState = (state) => {
     return {
-        addCampus: state.addCampus,
+        //addStudent: state.addStudent,
+        editCampus: state.editCampus,
         allCampuses: state.allCampuses,
+        campus: state.campus
+        //student: state.student,
     };
 };
 
 // Map dispatch to props;
 const mapDispatch = (dispatch) => {
     return {
-        addCampus: (campus) => dispatch(addCampusThunk(campus)),
-        fetchAllCampuses: () => dispatch(fetchAllCampusesThunk())
+        editCampus: campus => dispatch(editCampusThunk(campus)),
+        fetchAllCampuses: () => dispatch(fetchAllCampusesThunk()),
+        fetchCampus: (id) => dispatch(fetchCampusThunk(id))
+      //  fetchStudent: (id) => dispatch(fetchStudentThunk(id)),
     };
 };
 
 // Type check props;
-AddCampusContainer.propTypes = {
+UpdateCampusContainer.propTypes = {
     //students: PropTypes.array.isRequired,
-    addCampus: PropTypes.func.isRequired,
+    //addStudent: PropTypes.func.isRequired,
+    editCampus: PropTypes.func.isRequired,
     allCampuses: PropTypes.array.isRequired,
     fetchAllCampuses: PropTypes.func.isRequired,
 };
-//test
 
 // Export our store-connected container by default;
-export default connect(mapState, mapDispatch)(AddCampusContainer);
+export default connect(mapState, mapDispatch)(UpdateCampusContainer);

@@ -9,7 +9,7 @@ import { fetchStudentThunk } from "../../store/thunks";
 
 class UpdateStudentContainer extends Component {
     constructor(props) {
-        super(props); {
+        super(props); 
             this.state = {
                 firstName: this.props.student.firstname,
                 lastName: this.props.student.lastname,
@@ -31,7 +31,7 @@ class UpdateStudentContainer extends Component {
 
 
         }
-    }
+    
 
     componentDidMount() {
         console.log(this.props);

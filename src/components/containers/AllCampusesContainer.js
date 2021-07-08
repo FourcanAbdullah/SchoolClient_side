@@ -12,11 +12,8 @@ class AllCampusesContainer extends Component {
   }
   
   deleteCampus = (id) => {
-
     this.props.deleteCampus(id);
     this.props.fetchAllStudents();
-    //window.history.back()
-
   }
 
   render() {

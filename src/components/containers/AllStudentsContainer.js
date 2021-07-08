@@ -14,7 +14,6 @@ class AllStudentsContainer extends Component {
 
     this.props.deleteStudent(id);
     this.props.fetchAllStudents();
-    //window.history.back()
 
   }
 
