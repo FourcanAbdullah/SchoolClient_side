@@ -13,11 +13,11 @@ const AllCampusesView = (props) => {
       {props.allCampuses.map((campus) => (
         <div key={campus.id}>
            {<button onClick={() => { deleteCampus(campus.id) }}>X</button>}
+          <img id="target" src={campus.imageUrl} alt="Campus pic" />
           <Link to={`/campus/${campus.id}`}>
             <h1>{campus.name}</h1>
           </Link>
-          {/* <p>{campus.description}</p> */}
-          <img id="target" src={campus.imageUrl} alt="Campus pic" />
+          {/* <p>{campus.description}</p> */}  
         </div>
       ))}
 

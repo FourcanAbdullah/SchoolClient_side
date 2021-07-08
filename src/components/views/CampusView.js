@@ -17,8 +17,8 @@ const CampusView = (props) => {
         
       </ul>
       {
-                <Link to={`${campus.id}/edit`}>Update Campus</Link>
-        }
+        <Link to={`${campus.id}/edit`}>Update Campus</Link>
+      }
     </div>
   );
 

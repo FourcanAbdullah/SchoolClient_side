@@ -5,7 +5,5 @@ export { default as campus } from './campus';
 export { default as allStudents } from './students';
 export { default as student } from './student';
 export { default as addStudent } from './addStudent';
-
-//added
 export { default as addCampus} from './addCampus';
 export {default as editCampus} from './editCampus';

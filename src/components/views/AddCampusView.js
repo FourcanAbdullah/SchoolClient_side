@@ -3,7 +3,6 @@ import PropTypes from "prop-types";
 //import { CampusContainer } from "../containers";
 
 const AddCampusView = (props) => {
-    const { addCampus } = props;
     return (
         <div>
             <form onSubmit={this.handlesubmit}>

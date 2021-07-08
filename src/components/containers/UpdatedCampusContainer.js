@@ -3,9 +3,6 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { editCampusThunk, fetchAllCampusesThunk, fetchCampusThunk } from "../../store/thunks";
 import { Link } from "react-router-dom";
-//import { fetchStudentThunk } from "../../store/thunks";
-
-//import { AddStudentView } from "../views"
 
 class UpdateCampusContainer extends Component {
     constructor(props) {
@@ -21,9 +18,6 @@ class UpdateCampusContainer extends Component {
             this.handleAddress = this.handleAddress.bind(this);
             this.handleDescription = this.handleDescription.bind(this); 
             this.handleSubmit = this.handleSubmit.bind(this);
-/*     
-not sure about description initial value for its a text and rest are strings
-*/
     }
     componentDidMount() {
         console.log(this.props);
@@ -45,9 +39,6 @@ not sure about description initial value for its a text and rest are strings
                         Address:
                         <input name = "address" type="text" defaultvalue={this.props.campus.value} onChange={this.handleAddress} />
                     </label>
-                    
-        
-                    
                     <label>
                         Description:
                         <input name = "description" type="text" defaultvalue={this.props.campus.value} onChange={this.handleDescription} />
@@ -106,11 +97,9 @@ not sure about description initial value for its a text and rest are strings
 // Map state to props;
 const mapState = (state) => {
     return {
-        //addStudent: state.addStudent,
         editCampus: state.editCampus,
         allCampuses: state.allCampuses,
         campus: state.campus
-        //student: state.student,
     };
 };
 
@@ -120,14 +109,11 @@ const mapDispatch = (dispatch) => {
         editCampus: campus => dispatch(editCampusThunk(campus)),
         fetchAllCampuses: () => dispatch(fetchAllCampusesThunk()),
         fetchCampus: (id) => dispatch(fetchCampusThunk(id))
-      //  fetchStudent: (id) => dispatch(fetchStudentThunk(id)),
     };
 };
 
 // Type check props;
 UpdateCampusContainer.propTypes = {
-    //students: PropTypes.array.isRequired,
-    //addStudent: PropTypes.func.isRequired,
     editCampus: PropTypes.func.isRequired,
     allCampuses: PropTypes.array.isRequired,
     fetchAllCampuses: PropTypes.func.isRequired,

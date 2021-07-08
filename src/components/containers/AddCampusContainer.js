@@ -4,8 +4,6 @@ import { connect } from "react-redux";
 import { addCampusThunk, fetchAllCampusesThunk } from "../../store/thunks";
 import { Link } from "react-router-dom";
 
-import { AddCampusView } from "../views"
-
 class AddCampusContainer extends Component {
     constructor(props) {
         super(props); 
@@ -20,9 +18,6 @@ class AddCampusContainer extends Component {
             this.handleAddress = this.handleAddress.bind(this);
             this.handleDescription = this.handleDescription.bind(this); 
             this.handleSubmit = this.handleSubmit.bind(this);
-/*     
-not sure about description initial value for its a text and rest are strings
-*/
     }
     
     componentDidMount() {
@@ -30,6 +25,7 @@ not sure about description initial value for its a text and rest are strings
         this.props.fetchAllCampuses();
     }
     render() {
+        //form for adding a campus
         return (
             <div>
                 <form onSubmit={this.handleSubmit}>
@@ -54,7 +50,7 @@ not sure about description initial value for its a text and rest are strings
             </div >
         );
     }
-
+   //implementation of handlers
     handleName(event) {
         this.setState({
             Name: event.target.value
@@ -80,16 +76,13 @@ not sure about description initial value for its a text and rest are strings
     handleSubmit(event) {
         event.preventDefault();
         console.log(event);
-
         let addedData = {
-            //this is exact matched model attributes/columns on leftside in backend
             name: this.state.Name,
             imageUrl: this.state.Url,
             address: this.state.Address,
             description: this.state.Description 
         }
-       console.log(addedData)
-       //this.props.addCampus(addedData);    //line which is not working as it is supposed to.
+       console.log(addedData);
        this.props.addCampus(addedData);     
        window.history.go(-1)
     }
@@ -113,12 +106,10 @@ const mapDispatch = (dispatch) => {
 
 // Type check props;
 AddCampusContainer.propTypes = {
-    //students: PropTypes.array.isRequired,
     addCampus: PropTypes.func.isRequired,
     allCampuses: PropTypes.array.isRequired,
     fetchAllCampuses: PropTypes.func.isRequired,
 };
-//test
 
 // Export our store-connected container by default;
 export default connect(mapState, mapDispatch)(AddCampusContainer);
