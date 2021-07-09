@@ -4,7 +4,12 @@ import { deleteCampus } from "../../store/actions/actionCreators";
 
 const AllCampusesView = (props) => {
   if (!props.allCampuses.length) {
-    return <div>There are no campuses.</div>;
+    return <div>
+      <p>There are no campuses. </p>
+      <Link to={`/addCampus`}>
+          <p>Add Campus</p>
+      </Link>
+    </div>;
   }
   const {deleteCampus} = props;
 
