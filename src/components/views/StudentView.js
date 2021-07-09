@@ -5,7 +5,7 @@ const StudentView = (props) => {
     const { student, DeleteStudent, EditStudent } = props;
     return (
         <div>
-            <img id="target" src={student.imageUrl} />
+            <img id="target" style={{height:'200px',width:'200px'}} src={student.imageUrl} />
             <h1>{student.firstname + " " + student.lastname}</h1>
             <p>Email:{student.email}</p>
             <p>GPA:{student.gpa}</p>
