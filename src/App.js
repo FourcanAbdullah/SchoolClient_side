@@ -22,7 +22,7 @@ import {
 
 const App = () => {
   return (
-    <div className="App">
+    <div style={{height:'100%',width:'100%'}} className="App">
       <Switch>
         <Route exact path="/" component={HomePageContainer} />
         <Route exact path="/campuses" component={AllCampusesContainer} />
