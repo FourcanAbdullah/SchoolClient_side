@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
+import { Redirect } from "react-router-dom";
 import { addStudentThunk, fetchAllCampusesThunk } from "../../store/thunks";
 import { Link } from "react-router-dom";
 import { fetchStudentThunk } from "../../store/thunks";
@@ -17,7 +18,8 @@ class AddStudentContainer extends Component {
                 image: "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png",
                 gpa: 0,
                 campusId: null,     //fixed that error.
-                data: []
+                redirect: false,
+                // redirectId: null
 
             }
 
@@ -27,10 +29,10 @@ class AddStudentContainer extends Component {
             this.handleImage = this.handleImage.bind(this);
             this.handleGpa = this.handleGpa.bind(this);
             this.handleCollege = this.handleCollege.bind(this);
-            this.handleSubmit = this.handleSubmit.bind(this)
-
-
+            this.handleSubmit = this.handleSubmit.bind(this);
         }
+
+
     }
 
     componentDidMount() {
@@ -38,12 +40,11 @@ class AddStudentContainer extends Component {
         this.props.fetchAllCampuses();
     }
     render() {
+        if (this.state.redirect) {
+            return (<Redirect to={`/students`} />)
+        }
         return (
-            // <AddStudentView
-            // //addStudent={this.props.addStudent}
-            // //campus={this.props.campus}
-            // />
-            <div>
+            <div style={{ margin: 'auto', width: '60%', padding: '10px' }}>
                 <form onSubmit={this.handleSubmit}>
                     <label>
                         First Name:
@@ -68,18 +69,19 @@ class AddStudentContainer extends Component {
                     <label>
                         Select College:
                         <select value={this.state.value} onChange={this.handleCollege} placeholder="Select College">
-                            <option key="0" value="0">Not Selected</option>
+                            <option key="0" value={null}>Not Selected</option>
                             {
                                 this.props.allCampuses.map(campus => {
                                     let campusName = campus.name
                                     let campusId = campus.id
+
+
+
                                     return (
                                         <option key={campusId} value={campusId}>{campusName}</option>
                                     );
                                 })
                             }
-                            {/* <option value="1">Hunter College</option>
-                            <option value="2">Harvard</option> */}
 
                         </select>
                     </label>
@@ -107,12 +109,6 @@ class AddStudentContainer extends Component {
         })
     }
     handleImage(event) {
-        // if (event.target.files && event.target.files[0]) {
-        //     this.setState({
-        //         image: URL.createObjectURL(event.target.files[0])
-        //     });
-        // }
-
         this.setState({
             image: event.target.value
         })
@@ -130,42 +126,59 @@ class AddStudentContainer extends Component {
         })
     }
 
-    handleSubmit(event) {
+    handleSubmit = async (event) => {
         event.preventDefault();
         console.log(event);
-
-        let addedData = {
-            firstname: this.state.fistName,
-            lastname: this.state.lastName,
-            email: this.state.Email,
-            campusId: this.state.campusId,
-            imageUrl: this.state.image,
-            gpa: this.state.gpa,
+        if (this.state.fistName.length === 0) {
+            alert("Enter First Name")
         }
-        console.log(addedData)
-        // this.state.data.push(addedData)
-        // this.setState({
-        //     data: this.state.data
-        // })
-        // console.log(this.state.data)
-        this.props.addStudent(addedData);
-        // this.props.dispatch({
-        //     type: 'ADD_POST',
-        //     addedData
-        // });
-        //   this.getTitle.value = '';
-        //   this.getMessage.value = '';
-        window.history.go(-1)
-        //window.location = `/student/${this.props.fetchStudent(id)}`
+        else if (this.state.lastName.length === 0) {
+            alert("Enter Last Name")
+        }
+        else if (this.state.Email.length === 0) {
+            alert("Enter Email")
+        }
+        else {
+            let addedData = {
+                firstname: this.state.fistName,
+                lastname: this.state.lastName,
+                email: this.state.Email,
+                campusId: this.state.campusId,
+                imageUrl: this.state.image,
+                gpa: this.state.gpa,
+            };
+            console.log(addedData)
+            let waiter = await this.props.addStudent(addedData);
+
+            this.setState({
+                fistName: '',
+                lastName: '',
+                Email: '',
+                image: "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png",
+                gpa: 0,
+                campusId: null,     //fixed that error.
+                redirect: true,
+                //redirectId: waiter.id
+            });
+            // window.history.go(-1)
+            //window.location = `/student/${this.props.fetchStudent(id)}`
+        }
+    }
+    componentWillUnmount() {
+        this.setState({
+            redirect: false,
+            // redirectId: null
+        });
     }
 
+
 }
-// Map state to props;
+//Map state to props;
 const mapState = (state) => {
     return {
         addStudent: state.addStudent,
         allCampuses: state.allCampuses,
-        student: state.student,
+        students: state.students,
     };
 };
 
@@ -178,7 +191,7 @@ const mapDispatch = (dispatch) => {
     };
 };
 
-// Type check props;
+//Type check props;
 AddStudentContainer.propTypes = {
     //students: PropTypes.array.isRequired,
     addStudent: PropTypes.func.isRequired,
