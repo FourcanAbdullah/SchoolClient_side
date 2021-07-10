@@ -7,4 +7,4 @@ Project by:
 - Fourcan Abdullah, Github UserName: FourcanAbdullah
 - Saiman Tamang, Github UserName: saimantmg01
 
-Our [Server Repo](https://github.com/FourcanAbdullah/SchoolServer_side)
+Go to our [Server Repo](https://github.com/FourcanAbdullah/SchoolServer_side)
