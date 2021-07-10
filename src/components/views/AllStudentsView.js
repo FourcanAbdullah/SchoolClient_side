@@ -8,7 +8,7 @@ const AllStudentsView = (props) => {
     const { DeleteStudent } = props;
 
     return (
-        <div>
+        <div style={{margin:'auto', width: '60%', padding: '10px'}}>
             {props.allStudents.map((student) => (
                 <div key={student.id}>
                     {/* <img id="target" src={student.imageUrl} /> */}

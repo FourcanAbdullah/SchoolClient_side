@@ -14,7 +14,7 @@ const AllCampusesView = (props) => {
   const {deleteCampus} = props;
 
   return (
-    <div>
+    <div style={{margin:'auto', width: '60%', padding: '10px'}}>
       {props.allCampuses.map((campus) => (
         <div key={campus.id}>
           {<button onClick={() => { deleteCampus(campus.id) }}>X</button>}

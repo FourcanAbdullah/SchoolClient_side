@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 const StudentView = (props) => {
     const { student, DeleteStudent, EditStudent } = props;
     return (
-        <div>
+        <div style={{margin:'auto', width: '60%', padding: '10px'}}>
             <img id="target" style={{height:'200px',width:'200px'}} src={student.imageUrl} />
             <h1>{student.firstname + " " + student.lastname}</h1>
             <p>Email:{student.email}</p>
