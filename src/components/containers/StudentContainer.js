@@ -10,7 +10,7 @@ class StudentContainer extends Component {
   componentDidMount() {
     //getting campus ID from url
     this.props.fetchStudent(this.props.match.params.id);
-    //this.props.fetchCampus(this.props.match.params.campusId)
+
   }
   DeleteStudent = () => {
 
@@ -19,17 +19,13 @@ class StudentContainer extends Component {
 
   }
 
-  EditStudent = () => {
 
-
-  }
   render() {
     return (
       <StudentView
         student={this.props.student}
         DeleteStudent={this.DeleteStudent}
-        EditStudent={this.EditStudent}
-      //campus={this.props.campus}
+
       />
     );
   }
