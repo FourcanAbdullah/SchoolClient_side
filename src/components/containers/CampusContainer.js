@@ -22,8 +22,6 @@ class CampusContainer extends Component {
       studentId: 0
     }
     this.nullify= this.nullify.bind(this)
-    //added
-    this.adding = this.adding.bind(this)
     this.handleChange = this.handleChange.bind(this)
     this.handleSubmit =  this.handleSubmit.bind(this)
   }
@@ -54,46 +52,37 @@ class CampusContainer extends Component {
   }
   console.log(addedData)
   this.props.editStudent(addedData)
-  window.history.go(-1)
+  //this.props.fetchCampus(this.props.match.params.id);
+  window.location.reload()
+ // window.history.go(-1)
   }
 
-  //added
-  async adding() {
-    //student.preventDefault()
-    const student = await this.handleSubmit()
-    console.log(student)  
-    // this.setState ({ 
-    //   campusId: null
-    // })
-    let addedData = {
-      id: student.id,
-      firstName: student.firstname,
-      lastName: student.lastname,
-      Email: student.email,
-      image: student.imageUrl,
-      gpa: student.gpa,
-      campusId: this.props.match.params.id,
-  }
-  console.log(addedData)
-  this.props.editStudent(addedData)
-  //window.history.go(-1)
-  }
-
+  
   handleChange(event) {
     this.setState({
-      studentId: event.target.value
+      value: JSON.parse(event.target.value)
     })
-    console.log(event.target.value)
+    this.props.fetchCampus(this.props.match.params.id);
+    console.log(this.state.value)
     console.log(this.state.studentId)
   }
 
   async handleSubmit(event){
-    event.preventDefault();
-    //console.log(this.state.studentId)
-    let student = this.props.fetchStudent(this.state.studentId)
-   // console.log(student)
-    //this.adding(student)
-    return student
+   // event.preventDefault();
+    let addedData = {
+      id: this.state.value.id,
+      firstName: this.state.value.firstname,
+      lastName: this.state.value.lastname,
+      Email: this.state.value.email,
+      image: this.state.value.imageUrl,
+      gpa: this.state.value.gpa,
+      campusId: this.props.match.params.id,
+  }
+  console.log(addedData)
+  this.props.editStudent(addedData)
+  this.setState = {
+    value: null
+  }
   }
 
   render() {

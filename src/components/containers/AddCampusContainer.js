@@ -76,6 +76,13 @@ class AddCampusContainer extends Component {
     handleSubmit(event) {
         event.preventDefault();
         console.log(event);
+        if(this.state.Name.length === 0) {
+            alert("Enter name")
+        }
+        else if(this.state.Address.length === 0) {
+            alert("Enter Address")
+        }
+        else {
         let addedData = {
             name: this.state.Name,
             imageUrl: this.state.Url,
@@ -84,6 +91,7 @@ class AddCampusContainer extends Component {
         }
        console.log(addedData);
        this.props.addCampus(addedData);     
+    }
        window.history.go(-1)
     }
 

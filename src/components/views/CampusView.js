@@ -40,7 +40,7 @@ const CampusView = (props) => {
                    let campusId = student.campusId
                    if(!campusId) {
                      return (
-                       <option key = {student.id} value = {student.id}> {student.firstname + " " + student.lastname}</option>
+                       <option key = {student.id} value = {JSON.stringify(student)}> {student.firstname + " " + student.lastname}</option>
                      );
                    }
                  })
