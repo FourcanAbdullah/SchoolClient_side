@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 
 const AddCampusView = (props) => {
     return (
-        <div>
+        <div style={{margin:'auto', width: '60%', padding: '10px'}}>
             <form onSubmit={this.handlesubmit}>
                     <label>
                         Name:

@@ -14,11 +14,11 @@ const AllCampusesView = (props) => {
   const {deleteCampus} = props;
 
   return (
-    <div>
+    <div style={{margin:'auto', width: '60%', padding: '10px'}}>
       {props.allCampuses.map((campus) => (
         <div key={campus.id}>
-           {<button onClick={() => { deleteCampus(campus.id) }}>X</button>}
-          <img id="target" src={campus.imageUrl} alt="Campus pic" />
+          {<button onClick={() => { deleteCampus(campus.id) }}>X</button>}
+          <img style={{height:'200px',width:'200px'}} id="target" src={campus.imageUrl} alt="Campus pic" />
           <Link to={`/campus/${campus.id}`}>
             <h1>{campus.name}</h1>
           </Link>
